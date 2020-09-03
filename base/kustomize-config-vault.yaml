@@ -1,0 +1,4 @@
+varReference:
+- path: spec/template/metadata/annotations
+  kind: Deployment
+  apiVersion: apps/v1

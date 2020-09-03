@@ -1,0 +1,32 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - service-account.yaml
+  - deployment.yaml
+  - service.yaml
+
+patchesStrategicMerge:
+  - vault-annotation-patch.yaml
+
+generatorOptions:
+  disableNameSuffixHash: true
+
+configMapGenerator:
+  - name: logstash-config
+    files:
+      - config/jvm.options
+      - config/log4j2.properties
+      - config/logstash.conf
+      - config/logstash.yml
+      - config/pipelines.yml
+      - config/startup.options
+      - config/config-init.hcl
+
+#secretGenerator:
+#  - name: logstash-kafka-secret
+#    files:
+#      - config/<keystore>.jks
+#      - config/<trusted_keystore>.jks
+#      - config/client.crt
+#      - config/client.key
